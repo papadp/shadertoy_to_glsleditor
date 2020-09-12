@@ -24,19 +24,14 @@ uniform vec2 u_mouse;
 uniform float u_time;
 #define iResolution u_resolution
 #define iTime u_time
+#define iMouse u_mouse
 '''
 
     file_content = re.sub(".*?void +?mainImage.*?\(.*?\)", "void main()", file_content)
-    file_content = file_content.replace("fragCoord", "gl_FragCoord")
+    file_content = re.sub("fragCoord(\.xy)?", "gl_FragCoord.xy", file_content)
     file_content = file_content.replace("fragColor", "gl_FragColor")
 
-    # print(glsl_editor_content)
-
-    # print("=================================================================")
-
     glsl_editor_content += file_content
-
-    # print(glsl_editor_content)
 
     with open("out.frag", "w") as h:
         h.write(glsl_editor_content)
